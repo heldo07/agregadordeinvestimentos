@@ -1,5 +1,6 @@
 package tech.projava.agregadordeinvestimentos.service;
 
+import jakarta.persistence.Entity;
 import org.springframework.stereotype.Service;
 import tech.projava.agregadordeinvestimentos.controller.CreateUserDto;
 import tech.projava.agregadordeinvestimentos.controller.UpdateUserDto;
@@ -22,19 +23,19 @@ public class UserService {
     }
 
     public UUID createUser(CreateUserDto createUserDto){
-
+        System.out.println(createUserDto);
         //DTO ->ENTITY
         var entity = new User(
-                UUID.randomUUID(),
+                null,
                 createUserDto.username(),
                 createUserDto.email(),
                 createUserDto.password(),
                 Instant.now(),
                 null);
-
-       var userSaved = userRepository.save(entity);
-
-       return userSaved.getUserId();
+        System.out.println(createUserDto.username());
+        var userSaved = userRepository.save(entity);
+        System.out.println(userSaved);
+        return userSaved.getUserId();
     }
 
     public Optional<User> getUserById(String userId){

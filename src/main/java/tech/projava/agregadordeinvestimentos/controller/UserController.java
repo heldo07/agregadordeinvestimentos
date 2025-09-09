@@ -1,7 +1,7 @@
 package tech.projava.agregadordeinvestimentos.controller;
 
 
-import org.apache.coyote.Response;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.projava.agregadordeinvestimentos.entity.User;
@@ -23,13 +23,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody CreateUserDto CreateUserDto ){
-        var userId = userService.createUser(CreateUserDto);
+    public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto ){
+        var userId = userService.createUser(createUserDto);
+        System.out.print("passou aqui");
+        System.out.print(userId);
 
-        return ResponseEntity.created(URI.create("/v1/users" + userId.toString())).build();
+       return ResponseEntity.created(URI.create("/v1/users" + userId.toString())).build();
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<User> createUser(@PathVariable("userId") String userId){
+    public ResponseEntity<User> getUserById(@PathVariable("userId") String userId){
         var user = userService.getUserById(userId);
 
         if (user.isPresent()) {
@@ -41,9 +43,9 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> listUsers(){
-       var users = userService.listUsers();
+        var users = userService.listUsers();
 
-       return ResponseEntity.ok(users);
+        return ResponseEntity.ok(users);
     }
 
     @PutMapping("/{userId}")
@@ -55,7 +57,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteById(@PathVariable("userId") String userId){
-    userService.deleteById(userId);
-    return ResponseEntity.noContent().build();
+        userService.deleteById(userId);
+        return ResponseEntity.noContent().build();
     }
 }
